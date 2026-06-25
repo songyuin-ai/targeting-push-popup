@@ -1,0 +1,167 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+}
+
+.popup {
+  position: relative;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  padding: 28px 20px 0;
+  box-sizing: border-box;
+  animation: slideUp 0.3s ease;
+}
+
+.closeX {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-right: 24px;
+}
+
+.headline {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+
+.sub {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.body {
+  margin-bottom: 24px;
+}
+
+.selectAllRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-bottom: 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.selectAllBox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid #d0d0d0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.selectAllChecked {
+  background: #ff5c00;
+  border-color: #ff5c00;
+}
+
+.selectAllLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  font-family: inherit;
+}
+
+.divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin-bottom: 12px;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.caption {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #888;
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.footer {
+  padding: 16px 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cta {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  font-family: inherit;
+}
+
+.ctaActive {
+  background: #ff5c00;
+  color: #fff;
+}
+
+.ctaDisabled {
+  background: #f0f0f0;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.skip {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  padding: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
