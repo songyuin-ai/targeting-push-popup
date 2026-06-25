@@ -7,6 +7,16 @@
   min-height: 44px;
 }
 
+.subItem {
+  padding-left: 32px;
+  min-height: 38px;
+}
+
+.subItem .label {
+  font-size: 13px;
+  color: #555;
+}
+
 .checkbox {
   width: 22px;
   height: 22px;

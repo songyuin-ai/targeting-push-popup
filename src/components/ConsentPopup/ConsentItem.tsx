@@ -8,11 +8,12 @@ interface Props {
   checked: boolean;
   onChange: (code: ConsentItemCode) => void;
   onDetailOpen: (code: 'B' | 'C') => void;
+  sub?: boolean;
 }
 
-export function ConsentItem({ code, label, hasDetail, checked, onChange, onDetailOpen }: Props) {
+export function ConsentItem({ code, label, hasDetail, checked, onChange, onDetailOpen, sub }: Props) {
   return (
-    <label className={styles.item} onClick={e => e.preventDefault()}>
+    <label className={`${styles.item} ${sub ? styles.subItem : ''}`} onClick={e => e.preventDefault()}>
       <button
         className={`${styles.checkbox} ${checked ? styles.checked : ''}`}
         onClick={() => onChange(code)}

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import type { ConsentItemCode, ConsentItemConfig } from '../types/consent';
+import type { ConsentCase, ConsentItemCode, ConsentItemConfig } from '../types/consent';
 
-export function useConsentPopup(items: ConsentItemConfig[]) {
+export function useConsentPopup(items: ConsentItemConfig[], consentCase: ConsentCase) {
   const [checked, setChecked] = useState<Record<ConsentItemCode, boolean>>({
     B: false, C: false, D1: false,
   });
@@ -11,7 +11,15 @@ export function useConsentPopup(items: ConsentItemConfig[]) {
   const allChecked = visibleCodes.length > 0 && visibleCodes.every(code => checked[code]);
 
   function toggleItem(code: ConsentItemCode) {
-    setChecked(prev => ({ ...prev, [code]: !prev[code] }));
+    setChecked(prev => {
+      const next = { ...prev, [code]: !prev[code] };
+      // Case1: C와 D1 완전 동기화
+      if (consentCase === 'CASE1') {
+        if (code === 'C') next.D1 = next.C;
+        if (code === 'D1') next.C = next.D1;
+      }
+      return next;
+    });
   }
 
   function toggleAll() {

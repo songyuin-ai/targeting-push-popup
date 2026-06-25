@@ -20,10 +20,12 @@ interface Props {
 export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
   const consentCase = resolveCase(data.targetingConsent);
   const items = buildItemConfigs(consentCase);
-  const { checked, allChecked, toggleItem, toggleAll, ctaEnabled, agreedItems } = useConsentPopup(items);
+  const { checked, allChecked, toggleItem, toggleAll, ctaEnabled, agreedItems } = useConsentPopup(items, consentCase);
   const [detailCode, setDetailCode] = useState<'B' | 'C' | null>(null);
 
   const showSelectAll = items.length >= 2;
+  // Case1에서 C와 D1은 함께 노출되므로 D1은 C 하위로 렌더
+  const isCase1 = consentCase === 'CASE1';
 
   const caption = buildCaption(consentCase, data.activeAdChannels);
 
@@ -65,16 +67,28 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
             )}
 
             <div className={styles.itemList}>
-              {items.map(item => (
-                <ConsentItem
-                  key={item.code}
-                  code={item.code}
-                  label={item.label}
-                  hasDetail={item.hasDetail}
-                  checked={checked[item.code]}
-                  onChange={toggleItem}
-                  onDetailOpen={setDetailCode}
-                />
+              {items.filter(item => !(isCase1 && item.code === 'D1')).map(item => (
+                <div key={item.code}>
+                  <ConsentItem
+                    code={item.code}
+                    label={item.label}
+                    hasDetail={item.hasDetail}
+                    checked={checked[item.code]}
+                    onChange={toggleItem}
+                    onDetailOpen={setDetailCode}
+                  />
+                  {isCase1 && item.code === 'C' && (
+                    <ConsentItem
+                      code="D1"
+                      label="앱 푸시"
+                      hasDetail={false}
+                      checked={checked['D1']}
+                      onChange={toggleItem}
+                      onDetailOpen={setDetailCode}
+                      sub
+                    />
+                  )}
+                </div>
               ))}
             </div>
 
