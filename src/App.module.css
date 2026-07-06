@@ -45,7 +45,7 @@
 .appName {
   font-size: 22px;
   font-weight: 800;
-  color: #ff5c00;
+  color: #0D0F71;
   margin: 0 0 4px;
 }
 
@@ -77,9 +77,9 @@
 }
 
 .caseBtnActive {
-  border-color: #ff5c00;
-  background: #fff5f0;
-  color: #ff5c00;
+  border-color: #0D0F71;
+  background: #f0f0fa;
+  color: #0D0F71;
   font-weight: 700;
 }
 
@@ -100,8 +100,8 @@
 
 .reopen {
   background: none;
-  border: 1.5px solid #ff5c00;
-  color: #ff5c00;
+  border: 1.5px solid #0D0F71;
+  color: #0D0F71;
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 13px;

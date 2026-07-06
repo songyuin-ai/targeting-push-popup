@@ -2,19 +2,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 14px;
-  border: 1.5px solid #e8e8e8;
-  border-radius: 12px;
+  padding: 6px 0;
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.15s;
-  background: #fff;
+  background: transparent;
 }
 
-.cardChecked {
-  border-color: #ff5c00;
-  background: #fff9f7;
-}
+.cardChecked {}
 
 .checkbox {
   width: 22px;

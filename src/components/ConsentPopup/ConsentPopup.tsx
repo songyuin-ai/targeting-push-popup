@@ -70,37 +70,60 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
 
             {/* 동의서 섹션 */}
             <div className={styles.docSection}>
-              {docItems.map(item => (
-                <ConsentItem
-                  key={item.code}
-                  code={item.code}
-                  label={item.label}
-                  checked={checked[item.code]}
-                  onChange={toggleItem}
-                  onDetailOpen={setDetailCode}
-                />
-              ))}
-            </div>
-
-            {/* 채널 수신 설정 섹션 */}
-            {channelItems.length > 0 && (
-              <>
-                <div className={styles.sectionDivider}>
-                  <span className={styles.sectionLabel}>알림 채널 설정</span>
-                </div>
-                <div className={styles.channelSection}>
-                  {/* Case1: D1은 C 하위처럼 들여쓰기 없이 플랫하게, Case2: 동일 */}
-                  {channelItems.map(item => (
+              {/* Case1: B 단독, C+D1 그룹 */}
+              {isCase1 ? (
+                <>
+                  <ConsentItem
+                    code="B"
+                    label={docItems.find(i => i.code === 'B')!.label}
+                    checked={checked['B']}
+                    onChange={toggleItem}
+                    onDetailOpen={setDetailCode}
+                  />
+                  <div className={`${styles.group} ${checked['C'] || checked['D1'] ? styles.groupActive : ''}`}>
+                    <ConsentItem
+                      code="C"
+                      label={docItems.find(i => i.code === 'C')!.label}
+                      checked={checked['C']}
+                      onChange={toggleItem}
+                      onDetailOpen={setDetailCode}
+                    />
+                    <div className={styles.groupDivider} />
                     <ChannelToggleItem
-                      key={item.code}
-                      code={item.code}
-                      label={isCase2 ? '광고성 푸시 수신' : '앱 푸시'}
-                      checked={checked[item.code]}
+                      code="D1"
+                      label="앱 푸시"
+                      checked={checked['D1']}
                       onChange={toggleItem}
                     />
-                  ))}
-                </div>
-              </>
+                  </div>
+                </>
+              ) : (
+                docItems.map(item => (
+                  <ConsentItem
+                    key={item.code}
+                    code={item.code}
+                    label={item.label}
+                    checked={checked[item.code]}
+                    onChange={toggleItem}
+                    onDetailOpen={setDetailCode}
+                  />
+                ))
+              )}
+            </div>
+
+            {/* 채널 수신 설정 섹션 (Case2만, Case1은 그룹에 포함) */}
+            {channelItems.length > 0 && !isCase1 && (
+              <div className={styles.channelSection}>
+                {channelItems.map(item => (
+                  <ChannelToggleItem
+                    key={item.code}
+                    code={item.code}
+                    label="광고성 푸시 수신"
+                    checked={checked[item.code]}
+                    onChange={toggleItem}
+                  />
+                ))}
+              </div>
             )}
 
             {caption && (
