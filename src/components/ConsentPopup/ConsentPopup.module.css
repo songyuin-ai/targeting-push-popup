@@ -105,6 +105,41 @@
   gap: 4px;
 }
 
+.docSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionDivider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+
+.sectionDivider::before,
+.sectionDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ebebeb;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  color: #aaa;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.channelSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 2px;
+}
+
 .caption {
   margin: 14px 0 0;
   font-size: 12px;

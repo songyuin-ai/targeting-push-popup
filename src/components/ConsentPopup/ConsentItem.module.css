@@ -1,20 +1,19 @@
-.item {
+.card {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 14px 14px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 12px;
   cursor: pointer;
   user-select: none;
-  min-height: 44px;
+  transition: border-color 0.15s;
+  background: #fff;
 }
 
-.subItem {
-  padding-left: 32px;
-  min-height: 38px;
-}
-
-.subItem .label {
-  font-size: 13px;
-  color: #555;
+.cardChecked {
+  border-color: #ff5c00;
+  background: #fff9f7;
 }
 
 .checkbox {
@@ -32,7 +31,7 @@
   padding: 0;
 }
 
-.checkbox.checked {
+.checked {
   background: #ff5c00;
   border-color: #ff5c00;
 }

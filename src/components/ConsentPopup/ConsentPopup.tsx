@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './ConsentPopup.module.css';
 import { ConsentItem } from './ConsentItem';
+import { ChannelToggleItem } from './ChannelToggleItem';
 import { ConsentDetail } from './ConsentDetail';
 import { useConsentPopup } from '../../hooks/useConsentPopup';
 import { buildItemConfigs, DETAIL_CONTENT, resolveCase } from '../../api/consentApi';
@@ -24,8 +25,13 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
   const [detailCode, setDetailCode] = useState<'B' | 'C' | null>(null);
 
   const showSelectAll = items.length >= 2;
-  // Case1에서 C와 D1은 함께 노출되므로 D1은 C 하위로 렌더
   const isCase1 = consentCase === 'CASE1';
+  const isCase2 = consentCase === 'CASE2';
+
+  // 동의서 항목 (카드형): B, C
+  const docItems = items.filter(i => i.code === 'B' || i.code === 'C');
+  // 채널 항목 (토글형): D1
+  const channelItems = items.filter(i => i.code === 'D1');
 
   const caption = buildCaption(consentCase, data.activeAdChannels);
 
@@ -44,7 +50,7 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
 
           <div className={styles.header}>
             <h1 className={styles.headline}>놓치면 아까운 혜택,<br />가장 먼저 알려드릴게요</h1>
-            {consentCase === 'CASE1' && (
+            {isCase1 && (
               <p className={styles.sub}>쿠폰·이벤트·할인 정보를 실시간으로 받아보세요</p>
             )}
           </div>
@@ -52,11 +58,7 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
           <div className={styles.body}>
             {showSelectAll && (
               <>
-                <button
-                  className={styles.selectAllRow}
-                  onClick={toggleAll}
-                  type="button"
-                >
+                <button className={styles.selectAllRow} onClick={toggleAll} type="button">
                   <span className={`${styles.selectAllBox} ${allChecked ? styles.selectAllChecked : ''}`}>
                     {allChecked && <CheckAllIcon />}
                   </span>
@@ -66,31 +68,40 @@ export function ConsentPopup({ data, onAgree, onDismiss }: Props) {
               </>
             )}
 
-            <div className={styles.itemList}>
-              {items.filter(item => !(isCase1 && item.code === 'D1')).map(item => (
-                <div key={item.code}>
-                  <ConsentItem
-                    code={item.code}
-                    label={item.label}
-                    hasDetail={item.hasDetail}
-                    checked={checked[item.code]}
-                    onChange={toggleItem}
-                    onDetailOpen={setDetailCode}
-                  />
-                  {isCase1 && item.code === 'C' && (
-                    <ConsentItem
-                      code="D1"
-                      label="앱 푸시"
-                      hasDetail={false}
-                      checked={checked['D1']}
-                      onChange={toggleItem}
-                      onDetailOpen={setDetailCode}
-                      sub
-                    />
-                  )}
-                </div>
+            {/* 동의서 섹션 */}
+            <div className={styles.docSection}>
+              {docItems.map(item => (
+                <ConsentItem
+                  key={item.code}
+                  code={item.code}
+                  label={item.label}
+                  checked={checked[item.code]}
+                  onChange={toggleItem}
+                  onDetailOpen={setDetailCode}
+                />
               ))}
             </div>
+
+            {/* 채널 수신 설정 섹션 */}
+            {channelItems.length > 0 && (
+              <>
+                <div className={styles.sectionDivider}>
+                  <span className={styles.sectionLabel}>알림 채널 설정</span>
+                </div>
+                <div className={styles.channelSection}>
+                  {/* Case1: D1은 C 하위처럼 들여쓰기 없이 플랫하게, Case2: 동일 */}
+                  {channelItems.map(item => (
+                    <ChannelToggleItem
+                      key={item.code}
+                      code={item.code}
+                      label={isCase2 ? '광고성 푸시 수신' : '앱 푸시'}
+                      checked={checked[item.code]}
+                      onChange={toggleItem}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
 
             {caption && (
               <p className={styles.caption}>{caption}</p>

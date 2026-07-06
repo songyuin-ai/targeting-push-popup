@@ -4,16 +4,14 @@ import type { ConsentItemCode } from '../../types/consent';
 interface Props {
   code: ConsentItemCode;
   label: string;
-  hasDetail: boolean;
   checked: boolean;
   onChange: (code: ConsentItemCode) => void;
   onDetailOpen: (code: 'B' | 'C') => void;
-  sub?: boolean;
 }
 
-export function ConsentItem({ code, label, hasDetail, checked, onChange, onDetailOpen, sub }: Props) {
+export function ConsentItem({ code, label, checked, onChange, onDetailOpen }: Props) {
   return (
-    <label className={`${styles.item} ${sub ? styles.subItem : ''}`} onClick={e => e.preventDefault()}>
+    <div className={`${styles.card} ${checked ? styles.cardChecked : ''}`}>
       <button
         className={`${styles.checkbox} ${checked ? styles.checked : ''}`}
         onClick={() => onChange(code)}
@@ -24,7 +22,7 @@ export function ConsentItem({ code, label, hasDetail, checked, onChange, onDetai
         {checked && <CheckIcon />}
       </button>
       <span className={styles.label} onClick={() => onChange(code)}>{label}</span>
-      {hasDetail && (code === 'B' || code === 'C') && (
+      {(code === 'B' || code === 'C') && (
         <button
           className={styles.detailBtn}
           onClick={() => onDetailOpen(code)}
@@ -33,7 +31,7 @@ export function ConsentItem({ code, label, hasDetail, checked, onChange, onDetai
           보기
         </button>
       )}
-    </label>
+    </div>
   );
 }
 
